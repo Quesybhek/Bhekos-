@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BhekOS 6.0 - Complete Windows 11 + macOS Sonoma Hybrid OS">
+    <meta name="theme-color" content="#0078FF">
+    <title>🚀 BhekOS 6.0</title>
+    
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%230078FF%22>🚀</text></svg>">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Power Animation Overlay -->
+<div id="power-animation-overlay">
+    <div id="power-animation-logo">
+        <!-- Logo image will be set dynamically -->
+        <img id="favicon-32.png" alt="BhekOS Logo">
+    </div>
+    <div id="power-animation-text">BhekOS 6.0</div>
+    <div id="power-animation-progress">
+        <div id="power-animation-progress-bar"></div>
+    </div>
+    <div id="power-animation-status">
+        <span id="power-status-text">Initializing</span>
+        <span id="power-animation-dots">
+            <span class="power-dot"></span>
+            <span class="power-dot"></span>
+            <span class="power-dot"></span>
+        </span>
+    </div>
+</div>
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <div class="login-container">
+            <div class="login-avatar">
+                👤
+            </div>
+            <div class="login-name">BhekOS User</div>
+            <div class="login-status">Windows 11 + macOS Sonoma Hybrid</div>
+            <input type="password" class="login-input" placeholder="Enter password (press Enter)" id="login-password" autofocus>
+            <button class="btn btn-primary" onclick="os.login()">
+                🔓 Login
+            </button>
+            <div style="margin-top: 24px; font-size: 12px; opacity: 0.6;">
+                Press Ctrl+Alt+Del to access security options
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop -->
+    <div id="desktop" class="hidden">
+        <div class="wallpaper-animation"></div>
+        
+        <!-- Desktop Icons -->
+        <div id="desktop-icons"></div>
+        
+        <!-- Windows will be created here -->
+        <div id="windows-container"></div>
+        
+        <!-- Notification Container -->
+        <div class="notification-container" id="notification-container"></div>
+    </div>
+
+    <!-- Menu Bar -->
+    <div class="menu-bar hidden" id="menu-bar">
+        <div class="menu-bar-left">
+            <div class="menu-bar-item" onclick="os.toggleLaunchpad()">
+                🚀 BhekOS
+            </div>
+            <div class="menu-bar-item" onclick="os.spawnApp('📁 File Explorer')">
+                📁 File
+            </div>
+            <div class="menu-bar-item" onclick="os.spawnApp('💻 Terminal')">
+                📝 Edit
+            </div>
+            <div class="menu-bar-item" onclick="os.spawnApp('⚙️ Settings')">
+                👁️ View
+            </div>
+            <div class="menu-bar-item" onclick="os.showWindowMenu()">
+                🪟 Window
+            </div>
+            <div class="menu-bar-item" onclick="os.spawnApp('❓ Help')">
+                ❓ Help
+            </div>
+        </div>
+        <div class="menu-bar-center" id="menu-center">
+            <span id="menu-center-text">🚀 BhekOS 6.0</span>
+        </div>
+        <div class="menu-bar-right">
+            <div class="status-icon" onclick="os.toggleWiFi()" title="Wi-Fi">
+                📶
+            </div>
+            <div class="status-icon" onclick="os.toggleBluetooth()" title="Bluetooth">
+                📱
+            </div>
+            <div class="status-icon" onclick="os.toggleVolume()" title="Volume">
+                🔊
+            </div>
+            <div class="status-icon" onclick="os.toggleBattery()" title="Battery">
+                🔋
+            </div>
+            <div class="status-icon" onclick="os.toggleControlCenter()" title="Control Center">
+                ⚙️
+            </div>
+            <div id="system-clock" class="clock">🕛 00:00</div>
+        </div>
+    </div>
+
+    <!-- Dock -->
+    <div class="dock hidden" id="dock">
+        <div class="dock-item" onclick="os.toggleLaunchpad()" title="Launchpad">
+            🚀
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('📁 File Explorer')" title="File Explorer">
+            📁
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('💻 Terminal')" title="Terminal">
+            💻
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('🌐 Browser')" title="Browser">
+            🌐
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('⚙️ Settings')" title="Settings">
+            ⚙️
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('🎮 Game Center')" title="Game Center">
+            🎮
+        </div>
+        <div class="dock-divider"></div>
+        <div class="dock-item" onclick="os.spawnApp('📝 Notepad')" title="Notepad">
+            📝
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('🧮 Calculator')" title="Calculator">
+            🧮
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('🎨 Paint')" title="Paint">
+            🎨
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('🎵 Media Player')" title="Media Player">
+            🎵
+        </div>
+        <div class="dock-item" onclick="os.spawnApp('🤖 AI Assistant')" title="AI Assistant">
+            🤖
+        </div>
+    </div>
+
+    <!-- Launchpad -->
+    <div id="launchpad" class="hidden">
+        <div class="launchpad-header">
+            <h1 style="font-size: 48px; margin-bottom: 16px;">🚀 Launchpad</h1>
+            <p style="opacity: 0.8; font-size: 18px;">All your apps in one place</p>
+        </div>
+        <input type="text" class="launchpad-search" placeholder="🔍 Search apps..." id="launchpad-search">
+        <div class="launchpad-grid" id="launchpad-grid">
+            <!-- Apps will be dynamically added here -->
+        </div>
+        <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);">
+            <button class="btn btn-secondary" onclick="os.toggleLaunchpad()">
+                ❌ Close Launchpad
+            </button>
+        </div>
+    </div>
+
+    <!-- Control Center -->
+    <div id="control-center" class="hidden">
+        <div class="control-center-header">
+            <div class="control-center-title">⚙️ Control Center</div>
+            <button class="btn btn-sm btn-secondary" onclick="os.toggleControlCenter()">
+                ❌
+            </button>
+        </div>
+        <div class="control-center-grid">
+            <div class="control-item" onclick="os.toggleWiFi()">
+                <div class="control-icon">
+                    📶
+                </div>
+                <div class="control-label">Wi-Fi</div>
+            </div>
+            <div class="control-item" onclick="os.toggleBluetooth()">
+                <div class="control-icon">
+                    📱
+                </div>
+                <div class="control-label">Bluetooth</div>
+            </div>
+            <div class="control-item" onclick="os.toggleAirplaneMode()">
+                <div class="control-icon">
+                    ✈️
+                </div>
+                <div class="control-label">Airplane</div>
+            </div>
+            <div class="control-item" onclick="os.toggleDarkMode()">
+                <div class="control-icon">
+                    🌙
+                </div>
+                <div class="control-label">Dark Mode</div>
+            </div>
+            <div class="control-item" onclick="os.openDisplaySettings()">
+                <div class="control-icon">
+                    🖥️
+                </div>
+                <div class="control-label">Display</div>
+            </div>
+            <div class="control-item" onclick="os.openSoundSettings()">
+                <div class="control-icon">
+                    🔊
+                </div>
+                <div class="control-label">Sound</div>
+            </div>
+            <div class="control-item" onclick="os.openKeyboardSettings()">
+                <div class="control-icon">
+                    ⌨️
+                </div>
+                <div class="control-label">Keyboard</div>
+            </div>
+            <div class="control-item" onclick="os.openNetworkSettings()">
+                <div class="control-icon">
+                    🌐
+                </div>
+                <div class="control-label">Network</div>
+            </div>
+        </div>
+        <div class="control-sliders">
+            <div class="slider-container">
+                <div class="slider-label">
+                    <span>🔆 Brightness</span>
+                    <span id="brightness-value">75%</span>
+                </div>
+                <input type="range" class="slider" id="brightness-slider" min="0" max="100" value="75">
+            </div>
+            <div class="slider-container">
+                <div class="slider-label">
+                    <span>🔊 Volume</span>
+                    <span id="volume-value">50%</span>
+                </div>
+                <input type="range" class="slider" id="volume-slider" min="0" max="100" value="50">
+            </div>
+        </div>
+        <div style="padding: 20px; border-top: 1px solid var(--glass-border);">
+            <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary flex-1" onclick="os.lockScreen()">
+                    🔒 Lock
+                </button>
+                <button class="btn btn-secondary flex-1" onclick="os.sleep()">
+                    🌙 Sleep
+                </button>
+                <button class="btn btn-danger flex-1" onclick="os.showPowerMenu()">
+                    ⏻ Power
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Power Menu -->
+    <div id="power-menu" class="hidden" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 32px;
+        width: 400px;
+        text-align: center;
+        box-shadow: var(--shadow-xl);
+        z-index: var(--z-modal);
+    ">
+        <h2 style="margin-bottom: 24px; font-size: 24px;">⏻ Power Options</h2>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <button class="btn btn-secondary" onclick="os.sleep()">
+                🌙 Sleep
+            </button>
+            <button class="btn btn-secondary" onclick="os.restart()">
+                🔄 Restart
+            </button>
+            <button class="btn btn-secondary" onclick="os.shutdown()">
+                ⏻ Shut Down
+            </button>
+            <button class="btn btn-secondary" onclick="os.lockScreen()">
+                🔒 Lock
+            </button>
+            <button class="btn btn-secondary" onclick="os.hidePowerMenu()">
+                ❌ Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="context-menu" class="hidden" style="
+        position: absolute;
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 8px;
+        min-width: 200px;
+        box-shadow: var(--shadow-xl);
+        z-index: var(--z-control-center);
+    "></div>
+
+    <!-- User Switcher -->
+    <div id="user-switcher" class="user-switcher hidden">
+        <div class="user-item" onclick="os.switchUser('admin')">
+            <div class="user-avatar">👑</div>
+            <div class="user-info">
+                <div class="user-name">Administrator</div>
+                <div class="user-status">🟢 Online</div>
+            </div>
+        </div>
+        <div class="user-item" onclick="os.switchUser('user1')">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+                <div class="user-name">User 1</div>
+                <div class="user-status">🟢 Online</div>
+            </div>
+        </div>
+        <div class="user-item" onclick="os.switchUser('user2')">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+                <div class="user-name">User 2</div>
+                <div class="user-status">🔴 Offline</div>
+            </div>
+        </div>
+        <div style="border-top: 1px solid var(--glass-border); margin-top: 12px; padding-top: 12px;">
+            <button class="btn btn-secondary w-full" onclick="os.addUser()">
+                ➕ Add User
+            </button>
+        </div>
+    </div>
+
+    <!-- Desktop Switcher -->
+    <div id="desktop-switcher" class="desktop-switcher hidden">
+        <div class="desktop-item active" onclick="os.switchDesktop(1)">
+            <div class="desktop-number">1️⃣</div>
+        </div>
+        <div class="desktop-item" onclick="os.switchDesktop(2)">
+            <div class="desktop-number">2️⃣</div>
+        </div>
+        <div class="desktop-item" onclick="os.switchDesktop(3)">
+            <div class="desktop-number">3️⃣</div>
+        </div>
+        <div class="desktop-item" onclick="os.switchDesktop(4)">
+            <div class="desktop-number">4️⃣</div>
+        </div>
+        <div class="desktop-item" onclick="os.addDesktop()">
+            <div class="desktop-number">➕</div>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="hidden">
+        <input type="text" class="search-input" placeholder="🔍 Search files, apps, settings..." id="search-input">
+        <div class="search-results" id="search-results">
+            <!-- Search results will be added here -->
+        </div>
+        <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);">
+            <button class="btn btn-secondary" onclick="os.hideSearch()">
+                ❌ Close Search
+            </button>
+        </div>
+    </div>
+
+    <!-- Clipboard Manager -->
+    <div id="clipboard-manager" class="clipboard-manager hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">📋 Clipboard History</div>
+        <div id="clipboard-items">
+            <!-- Clipboard items will be added here -->
+        </div>
+        <div style="border-top: 1px solid var(--glass-border); margin-top: 12px; padding-top: 12px;">
+            <button class="btn btn-secondary w-full" onclick="os.clearClipboard()">
+                🗑️ Clear Clipboard
+            </button>
+        </div>
+    </div>
+
+    <!-- Screen Recorder -->
+    <div id="screen-recorder" class="screen-recorder hidden">
+        <div class="recording-indicator"></div>
+        <div class="recording-time" id="recording-time">⏺️ 00:00</div>
+        <button class="btn btn-danger btn-sm" onclick="os.stopRecording()">
+            ⏹️ Stop
+        </button>
+    </div>
+
+    <!-- Screenshot Overlay -->
+    <div id="screenshot-overlay" class="screenshot-overlay hidden"></div>
+
+    <!-- Voice Assistant -->
+    <div class="voice-assistant hidden" id="voice-assistant" onclick="os.toggleVoiceAssistant()">
+        🎤
+    </div>
+    <div id="voice-assistant-popup" class="voice-assistant-popup hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">🤖 Voice Assistant</div>
+        <div id="voice-command-text">Say "Hey Bhek" to start...</div>
+        <div style="margin-top: 16px;">
+            <button class="btn btn-secondary w-full" onclick="os.stopVoiceAssistant()">
+                ❌ Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Accessibility Menu -->
+    <div id="accessibility-menu" class="accessibility-menu hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">♿ Accessibility</div>
+        <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span>👁️ High Contrast</span>
+                <label class="toggle">
+                    <input type="checkbox" id="high-contrast-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span>🗣️ Text to Speech</span>
+                <label class="toggle">
+                    <input type="checkbox" id="text-to-speech-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span>🔍 Screen Magnifier</span>
+                <label class="toggle">
+                    <input type="checkbox" id="screen-magnifier-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+        <button class="btn btn-secondary w-full" onclick="os.closeAccessibilityMenu()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Parental Controls -->
+    <div id="parental-controls" class="parental-controls hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">👨‍👩‍👧 Parental Controls</div>
+        <div class="time-remaining" id="time-remaining">⏰ 02:00:00</div>
+        <div style="margin-bottom: 16px;">
+            <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">Time remaining today</div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary flex-1" onclick="os.addTime(15)">
+                    ➕ 15 min
+                </button>
+                <button class="btn btn-secondary flex-1" onclick="os.pauseTime()">
+                    ⏸️ Pause
+                </button>
+            </div>
+        </div>
+        <button class="btn btn-secondary w-full" onclick="os.closeParentalControls()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Security Center -->
+    <div id="security-center" class="security-center hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">🛡️ Security Center</div>
+        <div class="security-status">
+            <div class="security-indicator security-good"></div>
+            <div style="flex: 1;">
+                <div style="font-size: 14px; font-weight: 500;">✅ All systems secure</div>
+                <div style="font-size: 12px; opacity: 0.8;">Last scan: Today</div>
+            </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+            <button class="btn btn-secondary w-full" onclick="os.runSecurityScan()">
+                🔍 Run Security Scan
+            </button>
+        </div>
+        <button class="btn btn-secondary w-full" onclick="os.closeSecurityCenter()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Disk Cleanup -->
+    <div id="disk-cleanup" class="disk-cleanup hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">🧹 Disk Cleanup</div>
+        <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>💾 Storage Used</span>
+                <span id="storage-used">75%</span>
+            </div>
+            <div class="disk-space">
+                <div class="disk-used" id="disk-used-bar" style="width: 75%;"></div>
+            </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+            <button class="btn btn-secondary w-full" onclick="os.cleanupDisk()">
+                🧹 Clean Up Now
+            </button>
+        </div>
+        <button class="btn btn-secondary w-full" onclick="os.closeDiskCleanup()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Performance Monitor -->
+    <div id="performance-monitor" class="performance-monitor hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">📊 Performance Monitor</div>
+        <div class="performance-graph" id="performance-graph">
+            <!-- Performance bars will be added here -->
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <div>
+                <div>💻 CPU: <span id="cpu-usage">45%</span></div>
+                <div>🧠 RAM: <span id="ram-usage">60%</span></div>
+            </div>
+            <div>
+                <div>🎮 GPU: <span id="gpu-usage">30%</span></div>
+                <div>💾 Disk: <span id="disk-usage">25%</span></div>
+            </div>
+        </div>
+        <button class="btn btn-secondary w-full" style="margin-top: 16px;" onclick="os.closePerformanceMonitor()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Developer Tools -->
+    <div id="devtools" class="devtools hidden">
+        <div class="devtools-tabs">
+            <button class="devtools-tab active" onclick="os.switchDevToolsTab('console')">
+                💻 Console
+            </button>
+            <button class="devtools-tab" onclick="os.switchDevToolsTab('elements')">
+                🔧 Elements
+            </button>
+            <button class="devtools-tab" onclick="os.switchDevToolsTab('network')">
+                🌐 Network
+            </button>
+            <button class="devtools-tab" onclick="os.switchDevToolsTab('performance')">
+                📊 Performance
+            </button>
+        </div>
+        <div class="devtools-content" id="devtools-content">
+            <!-- DevTools content will be added here -->
+        </div>
+    </div>
+
+    <!-- Cloud Sync -->
+    <div id="cloud-sync" class="cloud-sync hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">☁️ Cloud Sync</div>
+        <div class="sync-status">
+            <div style="flex: 1;">
+                <div style="font-size: 14px; font-weight: 500;">🔄 Syncing files...</div>
+                <div style="font-size: 12px; opacity: 0.8;" id="sync-status-text">Uploading 3 files</div>
+            </div>
+            <div class="sync-progress">
+                <div class="sync-progress-bar" id="sync-progress-bar" style="width: 45%;"></div>
+            </div>
+        </div>
+        <button class="btn btn-secondary w-full" style="margin-top: 16px;" onclick="os.closeCloudSync()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Remote Desktop -->
+    <div id="remote-desktop" class="remote-desktop hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">🖥️ Remote Desktop</div>
+        <div class="connection-status">
+            <div class="connection-dot connected"></div>
+            <div style="flex: 1;">
+                <div style="font-size: 14px; font-weight: 500;">✅ Connected to Server</div>
+                <div style="font-size: 12px; opacity: 0.8;">192.168.1.100:3389</div>
+            </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+            <button class="btn btn-secondary w-full" onclick="os.disconnectRemote()">
+                🔌 Disconnect
+            </button>
+        </div>
+        <button class="btn btn-secondary w-full" onclick="os.closeRemoteDesktop()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- File Sharing -->
+    <div id="file-sharing" class="file-sharing hidden">
+        <div style="font-weight: 600; margin-bottom: 12px; text-align: center;">📤 Share File</div>
+        <div class="share-qr">
+            📱
+        </div>
+        <div style="text-align: center; font-size: 13px; opacity: 0.8; margin-bottom: 16px;">
+            Scan QR code to download file
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <button class="btn btn-secondary flex-1" onclick="os.copyShareLink()">
+                🔗 Copy Link
+            </button>
+            <button class="btn btn-secondary flex-1" onclick="os.closeFileSharing()">
+                ❌ Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Printer Dialog -->
+    <div id="printer-dialog" class="printer-dialog hidden">
+        <h2 style="margin-bottom: 24px; font-size: 20px;">🖨️ Print Document</h2>
+        <div class="printer-list" id="printer-list">
+            <div class="printer-item">
+                <div style="font-weight: 500;">🖨️ HP LaserJet Pro</div>
+                <div style="font-size: 12px; opacity: 0.8;">✅ Ready • USB001</div>
+            </div>
+            <div class="printer-item">
+                <div style="font-weight: 500;">🖨️ Canon Pixma</div>
+                <div style="font-size: 12px; opacity: 0.8;">✅ Ready • WSD001</div>
+            </div>
+            <div class="printer-item">
+                <div style="font-weight: 500;">📄 PDF Printer</div>
+                <div style="font-size: 12px; opacity: 0.8;">✅ Always available</div>
+            </div>
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="btn btn-primary flex-1" onclick="os.printDocument()">
+                🖨️ Print
+            </button>
+            <button class="btn btn-secondary flex-1" onclick="os.closePrinterDialog()">
+                ❌ Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Scanner Dialog -->
+    <div id="scanner-dialog" class="scanner-dialog hidden">
+        <h2 style="margin-bottom: 24px; font-size: 20px;">📷 Scan Document</h2>
+        <div class="scanner-preview">
+            📄
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button class="btn btn-primary flex-1" onclick="os.scanDocument()">
+                📷 Scan
+            </button>
+            <button class="btn btn-secondary flex-1" onclick="os.closeScannerDialog()">
+                ❌ Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Gamepad Status -->
+    <div id="gamepad-status" class="gamepad-status hidden">
+        <div class="gamepad-connected"></div>
+        <div style="font-size: 13px;">🎮 Gamepad Connected</div>
+    </div>
+
+    <!-- Touch Gesture Hint -->
+    <div id="touch-gesture-hint" class="touch-gesture-hint hidden">
+        <div class="gesture-icon">👆</div>
+        <div style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">🖐️ Touch Gesture Detected</div>
+        <div style="font-size: 14px; opacity: 0.8; margin-bottom: 24px;">
+            Swipe with three fingers to switch desktops
+        </div>
+        <button class="btn btn-secondary" onclick="os.closeTouchHint()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Biometric Auth -->
+    <div id="biometric-auth" class="biometric-auth hidden">
+        <div class="biometric-icon">
+            👆
+        </div>
+        <div style="font-size: 24px; font-weight: 500; margin-bottom: 8px;">🔒 Biometric Authentication</div>
+        <div style="font-size: 14px; opacity: 0.8; margin-bottom: 24px;">
+            Place your finger on the sensor
+        </div>
+        <button class="btn btn-secondary" onclick="os.closeBiometricAuth()">
+            ❌ Cancel
+        </button>
+    </div>
+
+    <!-- Sensors Panel -->
+    <div id="sensors-panel" class="sensors-panel hidden">
+        <div style="font-weight: 600; margin-bottom: 12px;">📡 Sensors</div>
+        <div class="sensor-reading">
+            <span>📊 Accelerometer X:</span>
+            <span class="sensor-value" id="accel-x">0.00</span>
+        </div>
+        <div class="sensor-reading">
+            <span>📊 Accelerometer Y:</span>
+            <span class="sensor-value" id="accel-y">0.00</span>
+        </div>
+        <div class="sensor-reading">
+            <span>📊 Accelerometer Z:</span>
+            <span class="sensor-value" id="accel-z">0.00</span>
+        </div>
+        <div class="sensor-reading">
+            <span>🔄 Gyroscope X:</span>
+            <span class="sensor-value" id="gyro-x">0.00</span>
+        </div>
+        <div class="sensor-reading">
+            <span>🔄 Gyroscope Y:</span>
+            <span class="sensor-value" id="gyro-y">0.00</span>
+        </div>
+        <div class="sensor-reading">
+            <span>🔄 Gyroscope Z:</span>
+            <span class="sensor-value" id="gyro-z">0.00</span>
+        </div>
+        <button class="btn btn-secondary w-full" style="margin-top: 16px;" onclick="os.closeSensorsPanel()">
+            ❌ Close
+        </button>
+    </div>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt" class="hidden" style="
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        width: 320px;
+        box-shadow: var(--shadow-xl);
+        z-index: var(--z-control-center);
+    ">
+        <div style="margin-bottom: 16px;">
+            <div style="font-weight: 600; font-size: 16px; margin-bottom: 8px;">📱 Install BhekOS</div>
+            <p style="font-size: 13px; opacity: 0.9;">Install as app for best experience</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <button class="btn btn-primary flex-1" onclick="os.installApp()">
+                📥 Install
+            </button>
+            <button class="btn btn-secondary flex-1" onclick="os.hideInstallPrompt()">
+                ⏰ Later
+            </button>
+        </div>
+    </div>
+
+    <!-- Games (Hidden by default) -->
+    <div id="snake-game" class="game-container hidden">
+        <div class="game-header">
+            <h1 style="font-size: 32px; margin-bottom: 8px;">🐍 Snake Game</h1>
+            <p style="opacity: 0.8;">Use arrow keys to control the snake</p>
+        </div>
+        <canvas id="snake-canvas" width="600" height="400" class="game-canvas"></canvas>
+        <div class="game-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="snake-score">0</div>
+                <div class="stat-label">🏆 Score</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="snake-length">3</div>
+                <div class="stat-label">📏 Length</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="snake-high-score">0</div>
+                <div class="stat-label">⭐ High Score</div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <button class="btn btn-primary" onclick="os.startSnakeGame()">
+                ▶️ Start Game
+            </button>
+            <button class="btn btn-secondary" onclick="os.pauseSnakeGame()">
+                ⏸️ Pause
+            </button>
+            <button class="btn btn-secondary" onclick="os.resetSnakeGame()">
+                🔄 Reset
+            </button>
+        </div>
+    </div>
+
+    <div id="flappy-game" class="game-container hidden">
+        <div class="game-header">
+            <h1 style="font-size: 32px; margin-bottom: 8px;">🐦 Flappy Bird</h1>
+            <p style="opacity: 0.8;">Click or press space to flap</p>
+        </div>
+        <canvas id="flappy-canvas" width="400" height="500" class="game-canvas"></canvas>
+        <div class="game-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="flappy-score">0</div>
+                <div class="stat-label">🏆 Score</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="flappy-high-score">0</div>
+                <div class="stat-label">⭐ High Score</div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <button class="btn btn-primary" onclick="os.startFlappyGame()">
+                ▶️ Start Game
+            </button>
+            <button class="btn btn-secondary" onclick="os.resetFlappyGame()">
+                🔄 Reset
+            </button>
+        </div>
+    </div>
+
+    <div id="memory-game" class="game-container hidden">
+        <div class="game-header">
+            <h1 style="font-size: 32px; margin-bottom: 8px;">🧠 Memory Match</h1>
+            <p style="opacity: 0.8;">Find matching pairs</p>
+        </div>
+        <div class="memory-grid" id="memory-grid"></div>
+        <div class="game-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="memory-moves">0</div>
+                <div class="stat-label">↔️ Moves</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="memory-pairs">0/8</div>
+                <div class="stat-label">👥 Pairs Found</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="memory-high-score">0</div>
+                <div class="stat-label">⭐ Best Score</div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <button class="btn btn-primary" onclick="os.startMemoryGame()">
+                ▶️ New Game
+            </button>
+            <button class="btn btn-secondary" onclick="os.resetMemoryGame()">
+                🔄 Reset
+            </button>
+        </div>
+    </div>
+
+    <div id="game-2048" class="game-container hidden">
+        <div class="game-header">
+            <h1 style="font-size: 32px; margin-bottom: 8px;">🧩 2048</h1>
+            <p style="opacity: 0.8;">Use arrow keys to slide tiles</p>
+        </div>
+        <div class="game-2048-grid" id="game-2048-grid"></div>
+        <div class="game-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="score-2048">0</div>
+                <div class="stat-label">🏆 Score</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="high-score-2048">0</div>
+                <div class="stat-label">⭐ High Score</div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <button class="btn btn-primary" onclick="os.start2048Game()">
+                ▶️ New Game
+            </button>
+            <button class="btn btn-secondary" onclick="os.reset2048Game()">
+                🔄 Reset
+            </button>
+        </div>
+    </div>
+
+    <div id="puzzle-game" class="game-container hidden">
+        <div class="game-header">
+            <h1 style="font-size: 32px; margin-bottom: 8px;">🧩 Puzzle Game</h1>
+            <p style="opacity: 0.8;">Slide tiles to solve the puzzle</p>
+        </div>
+        <div class="puzzle-grid" id="puzzle-grid"></div>
+        <div class="game-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="puzzle-moves">0</div>
+                <div class="stat-label">↔️ Moves</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="puzzle-time">0s</div>
+                <div class="stat-label">⏰ Time</div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <button class="btn btn-primary" onclick="os.startPuzzleGame()">
+                ▶️ New Game
+            </button>
+            <button class="btn btn-secondary" onclick="os.resetPuzzleGame()">
+                🔄 Reset
+            </button>
+        </div>
+    </div>
+
+    <div id="tic-tac-toe" class="game-container hidden">
+        <div class="game-header">
+            <h1 style="font-size: 32px; margin-bottom: 8px;">⭕ Tic Tac Toe</h1>
+            <p style="opacity: 0.8;">Play against AI</p>
+        </div>
+        <div class="tic-tac-toe-grid" id="tic-tac-toe-grid"></div>
+        <div class="game-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="ttt-wins">0</div>
+                <div class="stat-label">🏆 Wins</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="ttt-losses">0</div>
+                <div class="stat-label">😢 Losses</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="ttt-draws">0</div>
+                <div class="stat-label">🤝 Draws</div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <button class="btn btn-primary" onclick="os.startTicTacToe()">
+                ▶️ New Game
+            </button>
+            <button class="btn btn-secondary" onclick="os.resetTicTacToe()">
+                🔄 Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- App Templates (Hidden) -->
+    <template id="window-template">
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <div class="window-icon"></div>
+                    <div class="window-title">Untitled</div>
+                </div>
+                <div class="window-controls">
+                    <div class="window-control window-minimize" title="Minimize">🗕</div>
+                    <div class="window-control window-maximize" title="Maximize">🗗</div>
+                    <div class="window-control window-close" title="Close">🗙</div>
+                </div>
+            </div>
+            <div class="window-content"></div>
+        </div>
+    </template>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('serviceworker.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
