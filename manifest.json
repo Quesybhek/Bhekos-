@@ -1,0 +1,90 @@
+{
+  "name": "BhekOS 6.0",
+  "short_name": "BhekOS",
+  "description": "Complete Windows 11 + macOS Sonoma Hybrid OS",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0078FF",
+  "orientation": "any",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "📁 File Explorer",
+      "short_name": "Explorer",
+      "description": "Open File Explorer",
+      "url": "/?app=explorer",
+      "icons": [{ "src": "icons/explorer.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "💻 Terminal",
+      "short_name": "Terminal",
+      "description": "Open Terminal",
+      "url": "/?app=terminal",
+      "icons": [{ "src": "icons/terminal.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "⚙️ Settings",
+      "short_name": "Settings",
+      "description": "Open Settings",
+      "url": "/?app=settings",
+      "icons": [{ "src": "icons/settings.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "🌐 Browser",
+      "short_name": "Browser",
+      "description": "Open Web Browser",
+      "url": "/?app=browser",
+      "icons": [{ "src": "icons/browser.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "🎮 Game Center",
+      "short_name": "Games",
+      "description": "Open Game Center",
+      "url": "/?app=games",
+      "icons": [{ "src": "icons/game.png", "sizes": "96x96" }]
+    }
+  ]
+}
